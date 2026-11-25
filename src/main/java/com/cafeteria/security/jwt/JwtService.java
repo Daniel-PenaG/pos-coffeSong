@@ -1,4 +1,4 @@
-package com.cafeteria.secutity.jwt;
+package com.cafeteria.security.jwt;
 
 
 
@@ -9,6 +9,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -33,5 +34,37 @@ public class JwtService {
 						System.currentTimeMillis()+ 86400000))
 				.signWith(getSigningKey())
 				.compact();
+	}
+	
+	public String extractUsername(String token) {
+		
+		return extractAllClaims(token)
+                .getSubject();
+	}
+	
+	public boolean isTokenValid(
+			String token,
+			String username) {
+		
+		String tokenUsername = extractUsername(token);
+		
+		return tokenUsername.equals(username) && !isTokenExpired(token);
+	}
+	
+	private boolean isTokenExpired(String token) {
+		
+		return extractAllClaims(token)
+				.getExpiration()
+				.before(new Date());
+	}
+	
+	private Claims extractAllClaims(String token) {
+		
+		return Jwts.parser()
+				.verifyWith((javax.crypto.SecretKey)
+						getSigningKey())
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
 	}
 }

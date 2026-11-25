@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cafeteria.auth.dto.LoginRequest;
 import com.cafeteria.auth.dto.LoginResponse;
 import com.cafeteria.role.entity.UserEntity;
-import com.cafeteria.secutity.jwt.JwtService;
+import com.cafeteria.security.jwt.JwtService;
 import com.cafeteria.user.repository.UserRepository;
 
 @Service
