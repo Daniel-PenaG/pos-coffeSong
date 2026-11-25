@@ -1,0 +1,22 @@
+spring:
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cafeteria_db
+    username: cafeteria_user
+    password: cafeteria123
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+server:
+  port: 8081
+
+security:
+  jwt:
+    secret-key: 1234567890123456789012345678901234567890
